@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/one_news"
+    android:layout_width="match_parent"
+    android:layout_height="205dp">
+
+
+    <ImageView
+        android:id="@+id/news_logo"
+        android:layout_width="match_parent"
+        android:layout_height="153dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/news_title"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/news_title"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="#1b213b"
+        android:gravity="bottom"
+        android:text="Название новости"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/news_logo" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

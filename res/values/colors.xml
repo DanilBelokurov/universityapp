@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="buttonPlay">#28b15f</color>
+    <color name="backgroundMain">#0b0e1f</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorBackgroundMenu">#1b213b</color>
+    <color name="colorRating">#fecf3b</color>
+
+    <color name="purple_200">#BB86FC</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_700">#018786</color>
+
+    <color name="black">#000000</color>
+
+
+
+
+
+
+
+
+</resources>
