@@ -77,7 +77,6 @@ public class WebviewActivity extends AppCompatActivity {
 
         mActionBarToolbar = findViewById(R.id.toolbar_actionbar);
         mActionBarToolbar.setTitle(pageName);
-        setSupportActionBar(mActionBarToolbar);
     }
 
     /**
