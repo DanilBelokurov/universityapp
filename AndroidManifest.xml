@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.suai.universityapp">
-    <!-- Аватарка пользователя -->
+    
+    
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Открытие браузера -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -14,23 +15,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.UniversityApp">
-        <activity android:name=".activities.WebviewActivity"></activity>
-        <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.RegistrationActivity" /> <!-- Main activity -->
+        
+        <activity
+            android:name=".activities.WebviewActivity"
+            android:theme="@style/Theme.UniversityApp.NoActionBar"/>
+        
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/Theme.UniversityApp.NoActionBar"/>
+        
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:theme="@style/Theme.UniversityApp.NoActionBar"/>
+        
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Theme.UniversityApp"/>
+        
         <activity
             android:name=".activities.MainActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.UniversityApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Intro activity -->
+        </activity>
+        
         <activity
             android:name=".activities.IntroActivity"
             android:configChanges="orientation|screenSize"
             android:theme="@style/Theme.UniversityApp.NoActionBar" />
+        
     </application>
 
 </manifest>
