@@ -1,4 +1,4 @@
-package org.suai.universityapp.activities;
+package org.suai.testapp.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,19 +16,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import org.suai.universityapp.R;
-import org.suai.universityapp.database.Database;
-import org.suai.universityapp.model.User;
-import org.suai.universityapp.utils.UsersDBUtils;
+import org.suai.testapp.R;
+import org.suai.testapp.database.Database;
+import org.suai.testapp.model.User;
+import org.suai.testapp.utils.UsersDBUtils;
 
 import java.util.Objects;
 
@@ -157,17 +163,49 @@ public class RegistrationActivity extends AppCompatActivity {
      */
     private void updateUserInfo(final String name, Uri pickedImgUri, final FirebaseUser currentUser) {
 
-        final UserProfileChangeRequest[] profileUpdate =
-                UsersDBUtils.updateUserInfo(name, pickedImgUri, newUser, db);
+        final UserProfileChangeRequest[] profileUpdate = new UserProfileChangeRequest[1];
 
-        currentUser.updateProfile(profileUpdate[0])
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        showMessage("Register complete");
-                        updateUI();
-                    }
-                });
+        if (pickedImgUri == null) {
+            String emptyUri = "https://firebasestorage.googleapis.com/v0/b/slotick-5e305.appspot.com/o/users_photos%2Fprofile_man4.jpg?alt=media&token=533ddbe6-7930-4eb5-9351-6c11a2329b84";
 
+            newUser.setAvatarUri(emptyUri);
+            db.getUsersFromDB().child(newUser.getUid()).child("uri").setValue(emptyUri);
+
+            profileUpdate[0] = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(name)
+                    .setPhotoUri(Uri.parse(emptyUri))
+                    .build();
+
+            currentUser.updateProfile(profileUpdate[0])
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            showMessage("Register complete");
+                            updateUI();
+                        }
+                    });
+        } else {
+            String uid = db.getUserFromDB().getUid();
+            db.getImageFilePath().child(uid).putFile(pickedImgUri)
+                    .addOnSuccessListener(taskSnapshot ->
+                            db.getImageFilePath().child(uid).getDownloadUrl().addOnSuccessListener(uri -> {
+
+                                newUser.setAvatarUri(uri.toString());
+                                db.getUsersFromDB().child(newUser.getUid()).child("uri").setValue(uri.toString());
+
+                                profileUpdate[0] = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(name)
+                                        .setPhotoUri(uri)
+                                        .build();
+
+                                currentUser.updateProfile(profileUpdate[0])
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                showMessage("Register complete");
+                                                updateUI();
+                                            }
+                                        });
+                            }));
+        }
     }
 
     /**Метод возвращения на "Главную"*/
@@ -230,6 +268,7 @@ public class RegistrationActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 pickedImgUri = result.getUri();
                 userPic.setImageURI(pickedImgUri);
+                Log.d("TAG", "onActivityResult: kjdfkfkj");
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 showMessage(result.getError().getMessage());
             }
