@@ -11,3 +11,6 @@
 * [ChatKit](https://github.com/stfalcon-studio/ChatKit) -- библиотека для реализации многопользовательского чата
 * [Glide](https://github.com/bumptech/glide) -- библиотека для работы с изображениями
 * [Circle Image view](https://github.com/hdodenhof/CircleImageView) и [Image cropper](https://github.com/ArthurHub/Android-Image-Cropper) -- библиотеки для создания круглых юзерпиков.
+
+## Демонстрация работы
+![](https://github.com/DanilBelokurov/universityapp/blob/main/screenshots/shots.png "Пример работы приложения")
